@@ -122,12 +122,12 @@ val_transform = transforms.Compose([
 # load the data
 print("Loading training dataset...")
 
-train_dataset = SignsDataset(dataset_dir="./dataset/train", transform=train_transform)
+train_dataset = SignsDataset(dataset_dir="./datasets/classifier/train", transform=train_transform)
 train_dataloader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True)
 
 print("Loading validation dataset...")
 
-val_dataset = SignsDataset(dataset_dir="./dataset/val", transform=val_transform)
+val_dataset = SignsDataset(dataset_dir="./datasets/classifier/val", transform=val_transform)
 val_dataloader = DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=True)
 
 print("Finished loading the data.")
