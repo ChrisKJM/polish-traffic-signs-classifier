@@ -6,6 +6,8 @@ import torch
 from classifier_model import ResNet34, ResidualBlock
 
 
+source_dir = "images"
+
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 
@@ -27,8 +29,8 @@ detector_model = YOLO("detector.pt")
 classifier_model = torch.load("classifier.pt").to(device)
 
 # get the images
-images = os.listdir("images/")
-images = ["images/" + images[i] for i in range(len(images)) if images[i][-4:].lower() in exts]
+images = os.listdir(source_dir)
+images = [os.path.join(source_dir, images[i]) for i in range(len(images)) if os.path.splitext(images[i])[-1].lower() in exts]
 
 # detect the images
 results = detector_model.predict(images, imgsz=640, conf=0.5)
