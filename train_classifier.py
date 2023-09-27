@@ -130,11 +130,19 @@ print("Loading validation dataset...")
 val_dataset = SignsDataset(dataset_dir="./datasets/classifier/val", transform=val_transform)
 val_dataloader = DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=True)
 
+print("Loading testing dataset...")
+
+test_dataset = SignsDataset(dataset_dir="./datasets/classifier/test", transform=val_transform)
+test_dataloader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=True)
+
 print("Finished loading the data.")
 
 
 # define the model
 model = ResNet34().to(device)
+
+# model = torch.load("classifier.pt").to(device)
+
 loss_func = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
 
@@ -235,3 +243,5 @@ for e in range(EPOCHS):
     test(val_dataloader, model, loss_func)
 
     torch.save(model, f"./classifier_models/model_epoch_{e}.pt")
+
+test(test_dataloader, model, loss_func)

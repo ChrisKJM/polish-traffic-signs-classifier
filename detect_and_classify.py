@@ -12,15 +12,15 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 
 
 # define the classes
-# classes = ["A1", "A2", "A7", "A17-imp", "A21", "A30", "B1", "B2", "B20-imp", "B21", "B22", "B23", "B33-30-50",
-#            "B33-60+", "B36", "B41", "C2", "C4", "C12", "D1-imp", "D6-imp", "other"]
+# classes = ["A1", "A17-imp", "A2", "A21", "A30", "A7", "B1", "B2", "B20-imp", "B21", "B22", "B23", "B33-30-50",
+#            "B33-60+", "B36", "B41", "C12", "C2", "C4", "D1-imp", "D6-imp", "other"]
 
-classes = ["niebezpieczny zakręt w prawo", "niebezpieczny zakręt w lewo", "ustąp pierwszeństwa", "dzieci (!)",
-           "tramwaj", "inne niebezpieczeństwo", "zakaz ruchu w obu kierunkach", "zakaz wjazdu", "stop (!)",
+classes = ["niebezpieczny zakręt w prawo", "dzieci (!)", "niebezpieczny zakręt w lewo", "tramwaj",
+           "inne niebezpieczeństwo", "ustąp pierwszeństwa", "zakaz ruchu w obu kierunkach", "zakaz wjazdu", "stop (!)",
            "zakaz skręcania w lewo", "zakaz skręcania w prawo", "zakaz zawracania", "ograniczenie prędkości 30 - 50",
-           "ograniczenie prędkości 60+", "zakaz zatrzymywania się", "zakaz ruchu pieszych", "nakaz jazdy w prawo za znakiem",
-           "nakaz jazdy w lewo za znakiem", "ruch okrężny", "droga z pierwszeństwem (!)", "przejście dla pieszych (!)",
-           "inne"]
+           "ograniczenie prędkości 60+", "zakaz zatrzymywania się", "zakaz ruchu pieszych", "ruch okrężny",
+           "nakaz jazdy w prawo za znakiem", "nakaz jazdy w lewo za znakiem", "droga z pierwszeństwem (!)",
+           "przejście dla pieszych (!)", "inne"]
 
 exts = [".jpg", ".jpeg", ".png"]
 
