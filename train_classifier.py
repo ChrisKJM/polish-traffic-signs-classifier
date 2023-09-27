@@ -73,7 +73,7 @@ class SignsDataset(Dataset):
 
 # a transform that randomly applies the given transforms with a specified probability
 class RandomApplyImageAugmentations(torch.nn.Module):
-    def __init__(self, *augmentations : tuple, random_order=True):
+    def __init__(self, *augmentations: tuple, random_order=True):
         super(RandomApplyImageAugmentations, self).__init__()
         self.augmentations = list(augmentations)
         self.random_order = random_order

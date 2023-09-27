@@ -22,9 +22,9 @@ for label in labels:
     random.shuffle(imgs)
     
     # change how many images to take depending on whether the class is 'important'
-    if label[-4:] == "-imp":
+    if label[-4:] == "-imp" or label[:3] == "B33":
         imgs = imgs[:min(len(imgs) - 1, 143)]
-    elif label == "other" or label[:3] == "B33":
+    elif label == "other":
         imgs = imgs[:342]
     else:
         imgs = imgs[:min(len(imgs) - 1, 72)]
