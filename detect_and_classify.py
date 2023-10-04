@@ -10,10 +10,6 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 
 softmax = nn.Softmax()
 
-# load the models
-detector_model = YOLO("detector.pt")
-classifier_model = torch.load("classifier.pt").to(device)
-
 # resize and normalize transform
 transform = transforms.Compose([
     transforms.Resize(224, interpolation=transforms.InterpolationMode.BILINEAR),
@@ -24,7 +20,7 @@ transform = transforms.Compose([
 ])
 
 
-def detect(images: dict()) -> dict:
+def detect(detector_model, images: dict()) -> dict:
     # detect the images
     detection_results = detector_model.predict(list(images.values()), imgsz=640, conf=0.5)
 
@@ -41,7 +37,7 @@ def detect(images: dict()) -> dict:
     return results
 
 
-def classify(images: dict()) -> dict:
+def classify(classifier_model, images: dict()) -> dict:
     results = dict()
 
     # iterate over the image names
@@ -74,11 +70,11 @@ def classify(images: dict()) -> dict:
     return results
 
 
-def detect_and_classify(images: dict()) -> dict:
+def detect_and_classify(detector_model, classifier_model, images: dict()) -> dict:
     results = dict()
 
     # detect
-    detection_results = detect(images)
+    detection_results = detect(detector_model, images)
 
     cut_out_images = dict()
 
@@ -92,7 +88,7 @@ def detect_and_classify(images: dict()) -> dict:
             )
 
     # classify
-    classification_results = classify(cut_out_images)
+    classification_results = classify(classifier_model, cut_out_images)
 
     # combine the results
     for image_name in images.keys():
