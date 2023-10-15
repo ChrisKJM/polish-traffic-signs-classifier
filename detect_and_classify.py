@@ -4,9 +4,23 @@ from torchvision.transforms import v2 as transforms
 import torch
 from classifier_model import ResNet34, ResidualBlock
 
+CLASSES = ["A1", "A17-imp", "A2", "A21", "A30", "A7", "B1", "B2", "B20-imp", "B21", "B22", "B23", "B33-30-50",
+           "B33-60+", "B36", "B41", "C12", "C2", "C4", "D1-imp", "D6-imp", "other"]
+
+CLASSES_FULL = ["niebezpieczny zakręt w prawo", "dzieci (!)", "niebezpieczny zakręt w lewo", "tramwaj",
+                "inne niebezpieczeństwo", "ustąp pierwszeństwa", "zakaz ruchu w obu kierunkach", "zakaz wjazdu", "stop (!)",
+                "zakaz skręcania w lewo", "zakaz skręcania w prawo", "zakaz zawracania", "ograniczenie prędkości 30 - 50",
+                "ograniczenie prędkości 60+", "zakaz zatrzymywania się", "zakaz ruchu pieszych", "ruch okrężny",
+                "nakaz jazdy w prawo za znakiem", "nakaz jazdy w lewo za znakiem", "droga z pierwszeństwem (!)",
+                "przejście dla pieszych (!)", "inne"]
+
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
+
+# load the models
+detector_model = YOLO("detector.pt")
+classifier_model = torch.load("classifier.pt").to(device)
 
 softmax = nn.Softmax()
 
@@ -20,7 +34,7 @@ transform = transforms.Compose([
 ])
 
 
-def detect(detector_model, images: dict()) -> dict:
+def detect(images: dict()) -> dict:
     # detect the images
     detection_results = detector_model.predict(list(images.values()), imgsz=640, conf=0.5)
 
@@ -37,7 +51,7 @@ def detect(detector_model, images: dict()) -> dict:
     return results
 
 
-def classify(classifier_model, images: dict()) -> dict:
+def classify(images: dict()) -> dict:
     results = dict()
 
     # iterate over the image names
@@ -70,11 +84,11 @@ def classify(classifier_model, images: dict()) -> dict:
     return results
 
 
-def detect_and_classify(detector_model, classifier_model, images: dict()) -> dict:
+def detect_and_classify(images: dict()) -> dict:
     results = dict()
 
     # detect
-    detection_results = detect(detector_model, images)
+    detection_results = detect(images)
 
     cut_out_images = dict()
 
@@ -88,7 +102,7 @@ def detect_and_classify(detector_model, classifier_model, images: dict()) -> dic
             )
 
     # classify
-    classification_results = classify(classifier_model, cut_out_images)
+    classification_results = classify(cut_out_images)
 
     # combine the results
     for image_name in images.keys():
