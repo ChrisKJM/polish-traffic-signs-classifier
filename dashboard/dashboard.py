@@ -16,7 +16,7 @@ from PIL import Image, ImageDraw, ImageOps
 img = st.file_uploader(label="Select an image", type=["png", "jpg"])
 
 if img is not None:
-    image = Image.open(img)
+    image = Image.open(img).convert("RGB")
     image = ImageOps.exif_transpose(image)
 
     result = detect_and_classify({"image": image})["image"]
