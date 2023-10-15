@@ -2,6 +2,7 @@ from torch import nn
 from ultralytics import YOLO
 from torchvision.transforms import v2 as transforms
 import torch
+import os
 from classifier_model import ResNet34, ResidualBlock
 
 CLASSES = ["A1", "A17-imp", "A2", "A21", "A30", "A7", "B1", "B2", "B20-imp", "B21", "B22", "B23", "B33-30-50",
@@ -17,10 +18,12 @@ CLASSES_FULL = ["niebezpieczny zakręt w prawo", "dzieci (!)", "niebezpieczny za
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
+project_dir = os.path.dirname(os.path.realpath(__file__))
+
 
 # load the models
-detector_model = YOLO("detector.pt")
-classifier_model = torch.load("classifier.pt", map_location=device).to(device)
+detector_model = YOLO(os.path.join(project_dir, "detector.pt"))
+classifier_model = torch.load(os.path.join(project_dir, "classifier.pt"), map_location=device).to(device)
 
 softmax = nn.Softmax()
 
@@ -34,7 +37,7 @@ transform = transforms.Compose([
 ])
 
 
-def detect(images: dict()) -> dict:
+def detect(images: dict) -> dict:
     # detect the images
     detection_results = detector_model.predict(list(images.values()), imgsz=640, conf=0.5)
 
@@ -51,7 +54,7 @@ def detect(images: dict()) -> dict:
     return results
 
 
-def classify(images: dict()) -> dict:
+def classify(images: dict) -> dict:
     results = dict()
 
     # iterate over the image names
@@ -84,7 +87,7 @@ def classify(images: dict()) -> dict:
     return results
 
 
-def detect_and_classify(images: dict()) -> dict:
+def detect_and_classify(images: dict) -> dict:
     results = dict()
 
     # detect

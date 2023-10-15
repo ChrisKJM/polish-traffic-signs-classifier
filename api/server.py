@@ -24,10 +24,9 @@ def detect_and_classify_images():
                     return {"message": "Allowed file extensions are .jpg, .jpeg and .png"}, 400
                 images[file.filename] = Image.open(file)
 
-            result = detect_and_classify(images)
-            result["message"] = "Success"
+            response = {"message": "Success", "results": detect_and_classify(images)}
 
-            return result, 200
+            return response, 200
 
         except Exception as e:
             return {"message": "An internal error has occured"}, 500
