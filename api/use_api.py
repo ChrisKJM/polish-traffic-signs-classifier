@@ -33,7 +33,7 @@ for image_name, result in results.items():
     for sign in result:
         class_counts[sign["prediction"]] += 1
 
-    if len(class_counts.nonzero()) == 0:
+    if len(class_counts.nonzero()[0].tolist()) == 0:
         print("No mistakes found!")
 
     for i in class_counts.nonzero()[0].tolist():
