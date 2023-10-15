@@ -20,7 +20,7 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 
 # load the models
 detector_model = YOLO("detector.pt")
-classifier_model = torch.load("classifier.pt").to(device)
+classifier_model = torch.load("classifier.pt", map_location=device).to(device)
 
 softmax = nn.Softmax()
 
