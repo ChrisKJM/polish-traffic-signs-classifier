@@ -1,7 +1,7 @@
 --extra-index-url https://download.pytorch.org/whl/cu117
 
 ultralytics~=8.0.171
-torch~=2.0.1+cu117
+torch~=2.0.1
 numpy~=1.24.1
 Pillow~=10.0.1
 torchvision~=0.15.2+cu117
