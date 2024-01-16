@@ -159,14 +159,18 @@ def train(dataloader, model, loss_func, optimizer):
         correct_counts.append(0)
         total_counts.append(0)
 
+    avg_loss = 0
+
     for x, y in dataloader:
         x, y = x.to(device), y.to(device)
 
         pred = model(x)
         loss = loss_func(pred, y)
 
-        # sum up the loss values
-        loss += loss_func(pred, y).item()
+        # back-propagate
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
 
         # count the correct and total counts for each class (to calculate accuracy for every class)
         pred_indexes = pred.argmax(1)
@@ -174,14 +178,12 @@ def train(dataloader, model, loss_func, optimizer):
             correct_counts[y[i].item()] += int(y[i] == pred_indexes[i])
             total_counts[y[i].item()] += 1
 
-        # back-propagate
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
+        # sum up the loss values
+        avg_loss += loss.item()
 
     # calculate the metrics
     correct_count = np.sum(correct_counts)
-    avg_loss = loss / batches_count
+    avg_loss /= batches_count
     accuracy = 100 * correct_count / size
     class_based_accuracies = {dataloader.dataset.labels_dict[i]: correct_counts[i] / total_counts[i] for i in range(CLASS_COUNT)}
 
