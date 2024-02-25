@@ -2,6 +2,8 @@
 datasets/
 classifier_models/
 detector_models/
+split_detector_data.py
+split_classifier_data.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
