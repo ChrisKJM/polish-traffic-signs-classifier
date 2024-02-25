@@ -3,6 +3,10 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/testin_overload" />
+      <excludeFolder url="file://$MODULE_DIR$/.ipynb_checkpoints" />
+      <excludeFolder url="file://$MODULE_DIR$/classifier_models" />
+      <excludeFolder url="file://$MODULE_DIR$/datasets" />
+      <excludeFolder url="file://$MODULE_DIR$/detector_models" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.10 (AI-TrafficSigns)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

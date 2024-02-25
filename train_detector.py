@@ -173,4 +173,7 @@ if __name__ == "__main__":
     model = YOLO("yolov8n.pt")
 
     # train the model
-    results = model.train(data="./datasets/detector/data.yaml", project="./", name="detector_models", epochs=50, imgsz=640, exist_ok=True, hsv_h=0.04, hsv_s=0.7, hsv_v=0.4, scale=(-0.5, 0.7), translate=0.1, degrees=15, perspective=0.001, mosaic=1, flipud=0, fliplr=0)
+    print("Training on target images...")
+    results = model.train(data="./datasets/detector/data.yaml", project="./", name="detector_models", exist_ok=True, epochs=50, imgsz=640, hsv_h=0.04, hsv_s=0.7, hsv_v=0.4, scale=0.5, translate=0.1, degrees=15, perspective=0.001, mosaic=1, flipud=0, fliplr=0)
+    print("Adding cut out and dummy images...")
+    results = model.train(data="./datasets/detector/data_with_additions.yaml", project="./", name="detector_models", exist_ok=True, epochs=25, imgsz=640, hsv_h=0.04, hsv_s=0.7, hsv_v=0.4, scale=(-0.5, 0.05), translate=0.1, degrees=15, perspective=0.001, mosaic=0, flipud=0, fliplr=0)
